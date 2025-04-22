@@ -36,23 +36,61 @@ python3 -c "import sublist3r" &>/dev/null && echo "Sublist3r installed" || echo 
 ./subdomain_enum.sh yahoo.com --full
 ```
 
+## Example Output
+### Basic Scan
+```
+./subdomain_enum.sh scanme.nmap.org
+>>> Subdomain Recon by JisanInfosec <<<
+[+] Output directory: /home/user/jisan_recon/scanme.nmap.org
+2025-04-21 23:20:00 - [*] Checking tools...
+2025-04-21 23:20:00 - [+] Proceeding with available tools!
+2025-04-21 23:20:00 - [*] Starting subdomain hunt...
+[+] 5 unique subdomains found!
+JISAN RECON SUMMARY
+🔍 Target: scanme.nmap.org
+📊 Total Subdomains: 5
+[+] Recon completed by JisanInfosec!
+```
+### Full Scan
+```
+./subdomain_enum.sh scanme.nmap.org --full
+[*] Starting full reconnaissance...
+[+] Puredns (DNS resolving)
+[+] HTTPX (Live subdomain check)
+[+] Gowitness (Taking screenshots)
+[+] Full recon completed!
+✅ Verified Subdomains: 1
+🌐 Live Subdomains: 1
+📸 Screenshots: 1
+```
 ## Install missing tools (Kali Linux):
 ```
 # Go-based tools
+sudo apt install golang -y
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 go install -v github.com/tomnomnom/assetfinder@latest
 go install -v github.com/projectdiscovery/puredns/v2/cmd/puredns@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 go install -v github.com/sensepost/gowitness@latest
+# Move Go binaries to PATH
+sudo mv ~/go/bin/* /usr/local/bin/
+
 # Apt-based tools
 sudo apt update
 sudo apt install amass ffuf curl jq seclists -y
+
 # Findomain
 wget https://github.com/Findomain/Findomain/releases/download/9.0.4/findomain-linux -O findomain
 chmod +x findomain
 sudo mv findomain /usr/local/bin/
+
 # Sublist3r
-pip3 install sublist3r
+sudo apt install pipx -y
+pipx install sublist3r
+# Add pipx to PATH
+export PATH="$HOME/.local/bin:$PATH"
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 ## Verify Wordlist
 
@@ -72,8 +110,16 @@ cat ~/tools/resolvers.txt  # Verify
 ```
 # Clone the repository
 git clone https://github.com/JisanInfosec/Jisan-Automated-Tools.git
-cd Jisan-Automated-Tools
+cd Jisan-Automated-Tools/Subdomain_enum
 # Make executable
+chmod +x subdomain_enum.sh
+
+# Alternative: Download ZIP
+# 1. Go to https://github.com/JisanInfosec/Jisan-Automated-Tools
+# 2. Click "Code" > "Download ZIP"
+# 3. Extract and navigate to the folder:
+unzip Jisan-Automated-Tools-main.zip
+cd Jisan-Automated-Tools-main
 chmod +x subdomain_enum.sh
 ```
 
@@ -106,8 +152,12 @@ chmod +x subdomain_enum.sh
 
 - **Sublist3r Fails**: Run manually: `python3 -m sublist3r -d scanme.nmap.org -o sublist3r.txt`.
 
-- **Gowitness Fails**: Ensure live subdomains exist: `cat live_subdomains.txt`. Run: `gowitness file -f live_subdomains.txt -P screenshots/ --delay 2`.
+- **Gowitness Fails**: Ensure live subdomains exist: `cat live_subdomains.txt`.
 
+ Run: 
+ ```
+ gowitness file -f live_subdomains.txt -P screenshots/ --delay 2
+ ```
 - **Resolvers Missing**: Recreate `~/tools/resolvers.txt`.
 
 ## Notes
@@ -116,12 +166,16 @@ chmod +x subdomain_enum.sh
 
 - **Performance**: Use smaller wordlists for `Amass`/`FFuf` to speed up scans (`scanme.nmap.org` delays, April 21, 2025).
 
+## License
+
+This project is licensed under the MIT License - see the  file for details.
+
 ## Follow My Journey
 
 - **GitHub**: https://github.com/JisanInfosec
 
 - **LinkedIn**: [Md Jisan](https://www.linkedin.com/in/md-jisan-2a4582282/)
 
-- **Pentest-Journey-2025**: Repo (`https://github.com/JisanInfosec/Pentest-Journey-2025`)
+- **Pentest-Journey-2025**: Repo (https://github.com/JisanInfosec/Pentest-Journey-2025)
 
 - **Hashtags**: #PentestingJourney #JisanInfosec #CyberBangla #BugBounty #SubdomainEnumeration
