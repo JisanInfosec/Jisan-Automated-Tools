@@ -141,8 +141,9 @@ chmod +x subdomain_enum.sh
 
 ## Example Results
 
-- **`scanme.nmap.org`**: ~5 subdomains, `Amass`/`FFuf` slow due to large wordlist (April 21, 2025).
+- **`scanme.nmap.org`**: ~10 subdomains, `Amass`/`FFuf` slow due to large wordlist (April 21, 2025).
 
+ ![screenshot](https://github.com/JisanInfosec/Jisan-Automated-Tools/blob/main/Subdomain_enum/screenshots/Example-01.png?raw=true)
 
 ## Troubleshooting
 
